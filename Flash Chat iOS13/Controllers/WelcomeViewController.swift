@@ -28,6 +28,13 @@ class WelcomeViewController: UIViewController {
             }
             chatCount += 1.0
         }
-        
+    }
+    
+    @IBAction func registerButtonAction(_ sender: UIButton) {
+        let vc = (storyboard?.instantiateViewController(withIdentifier: "RegisterViewController") as? RegisterViewController)!
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func loginButtonAction(_ sender: UIButton) {
     }
 }
