@@ -17,7 +17,7 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         titleLabel.text = ""
-        let text = "⚡️FlashChat"
+        let text = K.appName
         
         var chatCount:Double = 0.0
         
@@ -31,12 +31,12 @@ class WelcomeViewController: UIViewController {
     }
     
     @IBAction func registerButtonAction(_ sender: UIButton) {
-        let vc = (storyboard?.instantiateViewController(withIdentifier: "RegisterViewController") as? RegisterViewController)!
+        let vc = (storyboard?.instantiateViewController(withIdentifier: K.registerSegue) as? RegisterViewController)!
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func loginButtonAction(_ sender: UIButton) {
-        let vc = (storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController)!
+        let vc = (storyboard?.instantiateViewController(withIdentifier: K.loginSegue) as? LoginViewController)!
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -22,7 +22,7 @@ class RegisterViewController: UIViewController {
                 if let e = error{
                     print(e.localizedDescription)
                 } else{
-                    let vc = self.storyboard?.instantiateViewController(identifier: "ChatViewController") as! ChatViewController
+                    let vc = self.storyboard?.instantiateViewController(identifier: K.chatSegue) as! ChatViewController
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
                 

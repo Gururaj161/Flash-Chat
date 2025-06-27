@@ -23,7 +23,7 @@ class LoginViewController: UIViewController {
                     print(e.localizedDescription)
                 } else {
                 
-                    let vc = (self?.storyboard?.instantiateViewController(withIdentifier: "ChatViewController") as? ChatViewController)!
+                    let vc = (self?.storyboard?.instantiateViewController(withIdentifier: K.chatSegue) as? ChatViewController)!
                     self?.navigationController?.pushViewController(vc, animated: true)
                 }
             }
