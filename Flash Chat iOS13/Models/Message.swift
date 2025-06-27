@@ -9,8 +9,8 @@
 import Foundation
 
 struct Message {
-    let body: String
     let sender: String
+    let body: String
     
 }
 
