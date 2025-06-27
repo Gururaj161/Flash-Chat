@@ -21,8 +21,9 @@ class LoginViewController: UIViewController {
               
                 if let e = error{
                     print(e.localizedDescription)
-                } else{
-                    let vc = self?.storyboard?.instantiateViewController(withIdentifier: "ChatViewController") as! ChatViewController
+                } else {
+                
+                    let vc = (self?.storyboard?.instantiateViewController(withIdentifier: "ChatViewController") as? ChatViewController)!
                     self?.navigationController?.pushViewController(vc, animated: true)
                 }
             }
