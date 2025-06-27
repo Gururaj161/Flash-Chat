@@ -33,9 +33,9 @@ class ChatViewController: UIViewController {
     }
     
     func loadMessages() {
-        messages = []
-        
-        db.collection(K.FStore.collectionName).getDocuments { (QuerySnapshot,error) in
+      
+        db.collection(K.FStore.collectionName).addSnapshotListener { (QuerySnapshot,error) in
+            self.messages = []
             if let error = error {
                 print("Error getting documents: \(error)")
             } else {
@@ -46,7 +46,7 @@ class ChatViewController: UIViewController {
                            let body = data[K.FStore.bodyField] as? String {
                             let newMessage = Message(sender: sender, body: body)
                             self.messages.append(newMessage)
-                           DispatchQueue.main.async {
+                            DispatchQueue.main.async {
                                 self.tableView.reloadData()
                             }
                             
