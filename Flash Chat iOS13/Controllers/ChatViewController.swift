@@ -8,11 +8,14 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class ChatViewController: UIViewController {
-
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var messageTextfield: UITextField!
+    
+    let db = Firestore.firestore()
     
     var messages: [Message] = [Message(sender: "1@2.com", body:"hi" ),
                                Message(sender: "1@3.com", body: "hlo"),
@@ -25,17 +28,56 @@ class ChatViewController: UIViewController {
         title = K.appName
         navigationItem.hidesBackButton = true
         tableView.register(UINib(nibName: K.cellNibName, bundle: nil), forCellReuseIdentifier: K.cellIdentifier)
+        loadMessages()
+        
+    }
+    
+    func loadMessages() {
+        messages = []
+        
+        db.collection(K.FStore.collectionName).getDocuments { (QuerySnapshot,error) in
+            if let error = error {
+                print("Error getting documents: \(error)")
+            } else {
+                if let snapshotDocuments = QuerySnapshot?.documents {
+                    for doc in snapshotDocuments {
+                        let data = doc.data()
+                        if let sender = data[K.FStore.senderField] as? String,
+                           let body = data[K.FStore.bodyField] as? String {
+                            let newMessage = Message(sender: sender, body: body)
+                            self.messages.append(newMessage)
+                           DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
+                            
+                        }
+                    }
+                }
+            }
+        }
     }
     
     @IBAction func sendPressed(_ sender: UIButton) {
+        if let messageBody = messageTextfield.text , let messageSender = Auth.auth().currentUser!.email {
+            db.collection(K.FStore.collectionName).addDocument(data: [K.FStore.senderField: messageSender, K.FStore.bodyField: messageBody]) { error in
+                if let e = error {
+                    print("Error adding document: \(e)")
+                } else {
+                    print("Document successfully added!")
+                    self.messageTextfield.text = ""
+                    self.loadMessages()
+                }
+            }
+        }
+        
     }
     
     @IBAction func logOutButtonAction(_ sender: UIBarButtonItem) {
         do {
-          try Auth.auth().signOut()
+            try Auth.auth().signOut()
             self.navigationController?.popToRootViewController(animated: true)
         } catch let signOutError as NSError {
-          print("Error signing out: %@", signOutError)
+            print("Error signing out: %@", signOutError)
         }
     }
     
