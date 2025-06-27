@@ -36,5 +36,7 @@ class WelcomeViewController: UIViewController {
     }
     
     @IBAction func loginButtonAction(_ sender: UIButton) {
+        let vc = (storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController)!
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
