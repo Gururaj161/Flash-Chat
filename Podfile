@@ -6,6 +6,7 @@ target 'Flash Chat iOS13' do
   pod 'FirebaseCore'
   pod 'FirebaseAuth'
   pod 'FirebaseFirestore'
+
 end
 
 post_install do |installer|
